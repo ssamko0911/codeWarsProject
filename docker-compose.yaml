@@ -1,0 +1,31 @@
+services:
+    php:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: php-codewars
+        env_file:
+            - .env
+        restart: unless-stopped
+        volumes:
+            - ./:/srv/app
+        networks:
+            - codewars
+    
+    caddy:
+        image: caddy:2.7-alpine
+        container_name: caddy-codewars
+        depends_on:
+            - php
+        restart: unless-stopped
+        ports:
+            - "8599:80"
+        volumes:
+            - ./caddy:/etc/caddy
+            - ./:/srv/app
+        networks:
+            - codewars
+
+networks:
+    codewars:
+        driver: bridge

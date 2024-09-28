@@ -1,0 +1,19 @@
+networks:
+  codewars:
+    name: codewars
+
+services:
+  postgres:
+    image: postgres:14-alpine
+    container_name: postgres
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=codewars_postgres
+    volumes:
+      - /opt/docker/codewars/postgres:/var/lib/postgres:delegated
+    networks:
+      - codewars
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
