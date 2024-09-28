@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 //https://www.codewars.com/kata/58663693b359c4a6560001d6/train/php
 
+require '../../vendor/autoload.php';
+
 use App\task048\Entity\Map;
 use App\task048\Entity\MazeRunner;
 use App\task048\Enum\GameResult;

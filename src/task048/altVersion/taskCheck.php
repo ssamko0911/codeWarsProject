@@ -1,5 +1,7 @@
 <?php
 
+require '../../../vendor/autoload.php';
+
 use App\task048\altVersion\Entity\Maze;
 use App\task048\altVersion\Entity\MazeRunner;
 
