@@ -9,19 +9,13 @@ declare(strict_types=1);
  * @param string[] $arrayValues
  * @return string[]
  */
-function inArray(array $arrayNeedles, array $arrayValues) {
-    $substrings = [];
+function inArray(array $arrayNeedles, array $arrayValues): array
+{
+    $substrings = array_filter($arrayNeedles, function ($needle) use ($arrayValues) {
+        return strstr(implode(' ', $arrayValues), $needle);
+    });
 
-    foreach ($arrayNeedles as $needle) {
-        foreach ($arrayValues as $value) {
-            if (str_contains($value, $needle)) {
-                $substrings[] = $needle;
-            }
-        }
-    }
+    sort($substrings);
 
-    $uniqueSubstrings = array_unique($substrings);
-    sort($uniqueSubstrings, SORT_STRING);
-
-    return $uniqueSubstrings;
+    return $substrings;
 }
