@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+//https://www.codewars.com/kata/51e0007c1f9378fa810002a9/train/php
+
 const PARSE_CASES = [
   'increment' => 'i',
   'decrement' => 'd',
