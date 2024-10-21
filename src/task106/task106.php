@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+//https://www.codewars.com/kata/52597aa56021e91c93000cb0/train/php
+
 /**
  * @param array $items
  * @return array
