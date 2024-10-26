@@ -12,13 +12,11 @@ class URLBuilder
     const PORT_DEFAULT = '80';
     const PATH_DEFAULT = '/';
 
-    const UTIL_STRINGS = [
-        'urlSeparator' => '://',
-        'semicolon' => ':',
-        'atSign' => '@',
-        'questionMark' => '?',
-        'hashTag' => '#',
-    ];
+    const  URL_SEPARATOR = '://';
+    const  SEMICOLON = ':';
+    const  AT_SIGN = '@';
+    const  QUESTION_MARK = '@';
+    const  HASH_TAG = '#';
 
     public string $scheme;
     public string $user;
@@ -31,6 +29,7 @@ class URLBuilder
 
     /**
      * @throws Exception
+     * param array<string, string> $options
      */
     public function __construct(array $options)
     {
@@ -56,9 +55,7 @@ class URLBuilder
 
     public function build(): string
     {
-        $url = '';
-
-        $url .= $this->addSchemeToUrl();
+        $url = $this->addSchemeToUrl();
         $url = $this->addUserToUrl($url);
         $url .= $this->host;
         $url .= $this->addPortToUrl();
@@ -71,14 +68,14 @@ class URLBuilder
 
     private function addSchemeToUrl(): string
     {
-        return $this->scheme . self::UTIL_STRINGS['urlSeparator'];
+        return $this->scheme . self::URL_SEPARATOR;
     }
 
     private function addUserToUrl(string $url): string
     {
         if (!empty($this->user) && !empty($this->pass)) {
-            $url .= $this->user . self::UTIL_STRINGS['semicolon'];
-            $url .= urlencode($this->pass) . self::UTIL_STRINGS['atSign'];
+            $url .= $this->user . self::SEMICOLON;
+            $url .= urlencode($this->pass) . self::AT_SIGN;
         }
 
         return $url;
@@ -86,16 +83,16 @@ class URLBuilder
 
     private function addPortToUrl(): string
     {
-        return self::PORT_DEFAULT !== $this->port ? self::UTIL_STRINGS['semicolon'] . $this->port : '';
+        return self::PORT_DEFAULT !== $this->port ? self::SEMICOLON . $this->port : '';
     }
 
     private function addQueryStringToUrl(): string
     {
-        return [] !== $this->query ? self::UTIL_STRINGS['questionMark'] . http_build_query($this->query) : '';
+        return [] !== $this->query ? self::QUESTION_MARK . http_build_query($this->query) : '';
     }
 
     private function addFragmentToUrl(): string
     {
-        return !empty($this->fragment) ? self::UTIL_STRINGS['hashTag'] . $this->fragment : '';
+        return !empty($this->fragment) ? self::HASH_TAG . $this->fragment : '';
     }
 }
