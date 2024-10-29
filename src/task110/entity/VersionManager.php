@@ -8,40 +8,98 @@ use Exception;
 
 class VersionManager
 {
-    const DEFAULT_VERSION = '0.0.1';
     const DATA_SEPARATOR = '.';
 
-    public array $backup = [];
+    public int $major = 0;
+    public int $minor = 0;
+    public int $patch = 1;
 
-    public string $version;
+    /**@var array<int, array<string, int|string>> */
+    public array $backups = [];
 
     /**
      * @throws Exception
      */
     public function __construct(string|null $version = null)
     {
-        $cleanedVersion = $this->cleanVersion($version);
+        $params = $this->getParamsAsArray($version);
 
-        if (!$this->isValidParameter($cleanedVersion)) {
+        if (!$this->isValidParameter($params)) {
             throw new Exception('Error occured while parsing version!');
         }
 
-        if (empty($cleanedVersion)) {
-            $this->version = self::DEFAULT_VERSION;
-        } else {
-            $this->version = $cleanedVersion;
+        if (!empty($params)) {
+            $this->major = $params['major'];
+            $this->minor = $params['minor'];
+            $this->patch = $params['patch'];
         }
     }
 
-    private function isValidParameter(string|null $version): bool
+    /**
+     * @param string|null $version
+     * @return array<string, int|string>
+     */
+    private function getParamsAsArray(string|null $version): array
     {
-        if (empty($version)) {
+        $versionAsArray = [];
+
+        if (null === $version || '' === $version) {
+            return $versionAsArray;
+        }
+
+        $separatorCount = substr_count($version, self::DATA_SEPARATOR);
+
+        switch ($separatorCount) {
+            case 0:
+                return [
+                    'major' => $version,
+                    'minor' => 0,
+                    'patch' => 0,
+                ];
+            case 1:
+
+                $versionAsArray = explode('.', $version);
+
+                return [
+                    'major' => $versionAsArray[0],
+                    'minor' => $versionAsArray[1],
+                    'patch' => 0,
+                ];
+
+            case 2:
+                $versionAsArray = explode('.', $version);
+
+                return [
+                    'major' => $versionAsArray[0],
+                    'minor' => $versionAsArray[1],
+                    'patch' => $versionAsArray[2],
+                ];
+
+            case $separatorCount > 2:
+                $versionAsArray = array_slice(explode('.', $version), 0, 3);
+
+                return [
+                    'major' => $versionAsArray[0],
+                    'minor' => $versionAsArray[1],
+                    'patch' => $versionAsArray[2],
+                ];
+
+            default:
+                return $versionAsArray;
+        }
+    }
+
+    /**
+     * @param string[] $version
+     * @return bool
+     */
+    private function isValidParameter(array $version): bool
+    {
+        if ([] === $version) {
             return true;
         }
 
-        $versionAsArray = explode('.', $version);
-
-        foreach ($versionAsArray as $value) {
+        foreach ($version as $value) {
             if (!is_numeric($value)) {
                 return false;
             }
@@ -50,35 +108,48 @@ class VersionManager
         return true;
     }
 
+    private function setBackups(): self
+    {
+        $this->backups[] = [
+            'major' => $this->major,
+            'minor' => $this->minor,
+            'patch' => $this->patch,
+        ];
+
+        return $this;
+    }
+
+    private function getVersionAsString(): string
+    {
+        return sprintf('%d.%d.%d', $this->major, $this->minor, $this->patch);
+    }
+
     public function major(): self
     {
-        $this->backup[] = $this->version;
-        $versionAsArray = explode('.', $this->version);
-        $versionAsArray[0] = intval($versionAsArray[0]) + 1;
-        $versionAsArray[1] = 0;
-        $versionAsArray[2] = 0;
-        $this->version = implode('.', $versionAsArray);
+        $this->setBackups();
+
+        $this->major += 1;
+        $this->minor = 0;
+        $this->patch = 0;
 
         return $this;
     }
 
     public function minor(): self
     {
-        $this->backup[] = $this->version;
-        $versionAsArray = explode('.', $this->version);
-        $versionAsArray[1] = intval($versionAsArray[1]) + 1;
-        $versionAsArray[2] = 0;
-        $this->version = implode('.', $versionAsArray);
+        $this->setBackups();
+
+        $this->minor += 1;
+        $this->patch = 0;
 
         return $this;
     }
 
     public function patch(): self
     {
-        $this->backup[] = $this->version;
-        $versionAsArray = explode('.', $this->version);
-        $versionAsArray[2] = intval($versionAsArray[2]) + 1;
-        $this->version = implode('.', $versionAsArray);
+        $this->setBackups();
+
+        $this->patch += 1;
 
         return $this;
     }
@@ -88,12 +159,16 @@ class VersionManager
      */
     public function rollback(): self
     {
-        if (!isset($this->backup) || $this->backup === []) {
+        if (!isset($this->backups) || $this->backups === []) {
             throw new Exception('Cannot rollback!');
         }
 
-        if (count($this->backup) > 0) {
-            $this->version = array_pop($this->backup);
+        if (count($this->backups) > 0) {
+            $lastBackup = array_pop($this->backups);
+
+            $this->major = $lastBackup['major'];
+            $this->minor = $lastBackup['minor'];
+            $this->patch = $lastBackup['patch'];
         } else {
             throw new Exception('Cannot rollback!');
         }
@@ -101,35 +176,8 @@ class VersionManager
         return $this;
     }
 
-
     public function release(): string
     {
-        return $this->version;
-    }
-
-    private function cleanVersion(string|null $version): string
-    {
-        if (empty($version)) {
-            return '';
-        }
-
-        if (substr_count($version, self::DATA_SEPARATOR) === 0) {
-            return "$version.0.0";
-        }
-
-        if (substr_count($version, self::DATA_SEPARATOR) === 1) {
-            return "$version.0";
-        }
-
-        if (substr_count($version, self::DATA_SEPARATOR) === 2) {
-            return $version;
-        }
-
-        if (substr_count($version, self::DATA_SEPARATOR) > 2) {
-            $versionAsArray = explode('.', $version);
-            return implode('.', array_slice($versionAsArray, 0, 3));
-        }
-
-        return $version;
+        return $this->getVersionAsString();
     }
 }
