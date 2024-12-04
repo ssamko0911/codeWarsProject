@@ -9,4 +9,3 @@ use App\task119\entity\Person;
 require 'entity/Person.php';
 
 $person = new Person('Serhii', 'Samko');
-echo $person->get_full_name();
