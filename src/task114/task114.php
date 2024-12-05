@@ -4,23 +4,22 @@ declare(strict_types=1);
 
 //https://www.codewars.com/kata/596f1bdeda9b3b0297000018/train/php
 
-/**
- * @param int[] $apples
- * @return int
- */
-
 const APPLES_TRANSFER_AMOUNT = 2;
 
-function minSteps(array $apples): int
+/**
+ * @param int[] $apples
+ * @return int|bool
+ */
+function minSteps(array $apples): int|bool
 {
-    if (gettype(array_sum($apples) / count($apples)) !== 'integer') {
-        return 0;
+    if (0 !== array_sum($apples) % count($apples)) {
+        return false;
     }
 
     $applesPerChild = array_sum($apples) / count($apples);
 
     if (!isValidInput($apples, $applesPerChild)) {
-        return 0;
+        return false;
     }
 
     $steps = 0;
@@ -30,11 +29,7 @@ function minSteps(array $apples): int
     });
 
     foreach ($applesToShare as $applesAmount) {
-        if ($applesAmount < $applesPerChild) {
-            $difference = $applesPerChild - $applesAmount;
-            $steps += $difference / APPLES_TRANSFER_AMOUNT;
-        }
-        $difference = $applesAmount - $applesPerChild;
+        $difference = $applesPerChild - min($applesAmount, $applesPerChild);
         $steps += $difference / APPLES_TRANSFER_AMOUNT;
     }
 
@@ -48,17 +43,23 @@ function minSteps(array $apples): int
  */
 function isValidInput(array $apples, int $applesPerChild): bool
 {
-    $isEven = $applesPerChild % 2 === 0 ?? false;
-
-    if ($isEven) {
-        return count(array_filter($apples, function ($value) {
-                    return $value % 2 !== 0;
-                })
-            ) === 0;
-    } else {
-        return count(array_filter($apples, function ($value) {
-                    return $value % 2 === 0;
-                })
-            ) === 0;
+    if ($applesPerChild % 2 === 0) {
+        return getOddOrEvenCount($apples, true) === 0;
     }
+
+    return getOddOrEvenCount($apples) === 0;
+}
+
+/**
+ * @param int[] $items
+ * @param bool $isEven
+ * @return int
+ */
+function getOddOrEvenCount(array $items, bool $isEven = false): int
+{
+    return count(
+        array_filter($items, static function ($item) use ($isEven): bool {
+            return $isEven ? $item % 2 !== 0 : $item % 2 === 0;
+        })
+    );
 }
