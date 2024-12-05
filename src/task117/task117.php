@@ -28,7 +28,10 @@ function getCellAddresses(string $range): array
         return [];
     }
 
-    return selectCells(getRange($letters), getRange($digits));
+    $lettersRange = range($letters[0], $letters[1]);
+    $digitsRange = range($digits[0], $digits[1]);
+
+    return selectCells($lettersRange, $digitsRange);
 }
 
 /**
@@ -64,13 +67,4 @@ function selectCells(array $letters, array $digits): array
     }
 
     return $selectedCells;
-}
-
-/**
- * @param string[]|int[] $params
- * @return string[]|int[]
- */
-function getRange(array $params): array
-{
-    return range($params[0], $params[1]);
 }
