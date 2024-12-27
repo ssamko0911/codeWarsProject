@@ -8,7 +8,7 @@ namespace App\task122\entity;
 
 class Person
 {
-    const SPECIES = 'Homo Sapiens';
+    public const SPECIES = 'Homo Sapiens';
 
     public string $name;
     public int $age;

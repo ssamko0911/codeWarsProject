@@ -7,6 +7,7 @@ use App\task122\entity\Person;
 class Salesman extends Person
 {
     public string $occupation = 'Salesman';
+
     public function __construct(string $name, int $age)
     {
         parent::__construct($name, $age, $this->occupation);
