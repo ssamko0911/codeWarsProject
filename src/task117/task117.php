@@ -12,10 +12,6 @@ function getCellAddresses(string $range): array
 {
     $cells = explode(':', $range);
 
-    if (isOneCellRange($cells)) {
-        return [];
-    }
-
     $letters = [];
     $digits = [];
 
@@ -24,7 +20,7 @@ function getCellAddresses(string $range): array
         $digits[] = substr($cell, 1);
     }
 
-    if (isInvalidLetterRange($letters)) {
+    if (isInvalidLetterRange($letters) || isOneCellRange($cells)) {
         return [];
     }
 
