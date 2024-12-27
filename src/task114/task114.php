@@ -24,7 +24,7 @@ function minSteps(array $apples): int|bool
 
     $steps = 0;
 
-    $applesToShare = array_filter($apples, function ($value) use ($applesPerChild) {
+    $applesToShare = array_filter($apples, static function (int $value) use ($applesPerChild): bool {
         return $value !== $applesPerChild;
     });
 
@@ -43,23 +43,20 @@ function minSteps(array $apples): int|bool
  */
 function isValidInput(array $apples, int $applesPerChild): bool
 {
-    if ($applesPerChild % 2 === 0) {
-        return getOddOrEvenCount($apples, true) === 0;
-    }
-
-    return getOddOrEvenCount($apples) === 0;
+    return getOddOrEvenCount($apples, $applesPerChild) === 0;
 }
 
 /**
  * @param int[] $items
- * @param bool $isEven
+ * @param int $applesPerChild
  * @return int
  */
-function getOddOrEvenCount(array $items, bool $isEven = false): int
+
+function getOddOrEvenCount(array $items, int $applesPerChild): int
 {
     return count(
-        array_filter($items, static function ($item) use ($isEven): bool {
-            return $isEven ? $item % 2 !== 0 : $item % 2 === 0;
+        array_filter($items, static function ($item) use ($applesPerChild): bool {
+            return $applesPerChild % 2 === 0 ? $item % 2 !== 0 : $item % 2 === 0;
         })
     );
 }
