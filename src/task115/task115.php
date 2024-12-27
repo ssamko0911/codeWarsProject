@@ -8,7 +8,7 @@ function add (int $operandOne, int $operandTwo): int
 {
     while ($operandTwo !== 0) {
         $carry = $operandOne & $operandTwo;
-        $operandOne = $operandOne ^ $operandTwo;
+        $operandOne ^= $operandTwo;
         $operandTwo = $carry << 1;
     }
 
