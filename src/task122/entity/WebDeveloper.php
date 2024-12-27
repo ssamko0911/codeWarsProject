@@ -5,6 +5,7 @@ namespace App\task122\entity;
 class WebDeveloper extends ComputerProgrammer
 {
     public string $occupation = 'Web Developer';
+
     public function __construct(string $name, int $age)
     {
         parent::__construct($name, $age);
