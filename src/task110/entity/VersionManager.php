@@ -22,6 +22,7 @@ class VersionManager
      */
     public function __construct(string|null $version = null)
     {
+        // TODO: getInstance -> to get a new VersionManager with all the validated parameters;
         $params = $this->getParamsAsArray($version);
 
         if (!$this->isValidParameter($params)) {
