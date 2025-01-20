@@ -10,61 +10,31 @@ declare(strict_types=1);
  */
 function getLongestCommonPrefix(array $strings): string
 {
-    if ([] === ($strings)) {
-        return '';
-    }
-
-    if (count($strings) === 1) {
-        return $strings[0];
-    }
-
     $commonPrefix = '';
 
-    $i = 0;
-    while (true) {
-        $tempCheckLetter = getLettersToCompare($strings, $i);
+    if (0 === count($strings)) {
+        return $commonPrefix;
+    }
 
-        if ([] === $tempCheckLetter) {
-            return '';
+    $minStringLength = min(
+        array_map('strlen', $strings)
+    );
+
+    for ($i = 0; $i < $minStringLength; $i++) {
+        $letters = array_map(static function ($string) use ($i) {
+            return $string[$i];
+        }, $strings);
+
+        $isEqualLetter = checkEqualLetters($letters);
+
+        if ($isEqualLetter) {
+            $commonPrefix .= $letters[0];
+        } else {
+            return $commonPrefix;
         }
-
-        if (!checkEqualLetters($tempCheckLetter)) {
-            break;
-        }
-
-        $commonPrefix .= $tempCheckLetter[$i];
-        $i++;
     }
 
     return $commonPrefix;
-}
-
-/**
- * @param string $str
- * @param int $index
- * @return string;
- */
-function getLetter(string $str, int $index): string
-{
-    return $str[$index];
-}
-
-/**
- * @param string[] $words
- * @param int $index
- * @return string[]
- */
-function getLettersToCompare(array $words, int $index): array
-{
-    $letters = [];
-
-    foreach ($words as $word) {
-        if ('' !== $word) {
-            $letters[] = getLetter($word, $index);
-        }
-    }
-
-    return $letters;
 }
 
 /**
@@ -75,5 +45,3 @@ function checkEqualLetters(array $letters): bool
 {
     return 1 === count(array_unique($letters, SORT_REGULAR));
 }
-
-echo getLongestCommonPrefix(["","b"]);
