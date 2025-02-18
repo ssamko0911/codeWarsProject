@@ -9,6 +9,7 @@ services:
         restart: unless-stopped
         volumes:
             - ./:/srv/app
+            - ./php/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro
         networks:
             - codewars
     
