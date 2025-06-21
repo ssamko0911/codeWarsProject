@@ -78,5 +78,3 @@ function generateLine(int $numberTiles, string $templateStart, string $templateR
 
     return $line;
 }
-
-echo puzzleTiles(4, 3);
