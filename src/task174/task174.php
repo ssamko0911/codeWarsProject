@@ -30,7 +30,7 @@ function average_string(string $str): string
 
     $numbers = array_map(
         static function (string $str): int {
-            return MAP[$str] ?? 0;
+            return MAP[$str];
         },
         $numbersAsStrings
     );
