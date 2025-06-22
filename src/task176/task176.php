@@ -48,7 +48,7 @@ function generateEvenRow(int $numberTiles, bool $isLastLine): string
     $row .= generateLine($numberTiles, TILE_MIDDLE_EVEN_START, TILE_MIDDLE_EVEN);
     $row .= LINE_LAST_CHARS['evenMiddle'] . "\n";
     $row .= generateLine($numberTiles, TILE_BOTTOM_START, TILE_BOTTOM);
-    $row .= $isLastLine ? LINE_LAST_CHARS['bottom'] : LINE_LAST_CHARS['bottom'] . "\n";
+    $row .= generateLastLine($isLastLine);
 
     return $row;
 }
@@ -60,7 +60,7 @@ function generateOddRow(int $numberTiles, bool $isLastLine): string
     $row .= generateLine($numberTiles, TILE_MIDDLE_ODD_START, TILE_MIDDLE_ODD);
     $row .= LINE_LAST_CHARS['oddMiddle'] . "\n";
     $row .= generateLine($numberTiles, TILE_BOTTOM_START, TILE_BOTTOM);
-    $row .= $isLastLine ? LINE_LAST_CHARS['bottom'] : LINE_LAST_CHARS['bottom'] . "\n";
+    $row .= generateLastLine($isLastLine);
 
     return $row;
 }
@@ -77,4 +77,9 @@ function generateLine(int $numberTiles, string $templateStart, string $templateR
     }
 
     return $line;
+}
+
+function generateLastLine(bool $isLastLine): string
+{
+    return $isLastLine ? LINE_LAST_CHARS['bottom'] : LINE_LAST_CHARS['bottom'] . "\n";
 }
