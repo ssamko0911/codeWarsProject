@@ -46,6 +46,11 @@ function isPalindrome(string $number): bool
     return $number === strrev($number);
 }
 
+/**
+ * @param string $number
+ * @param int[] $palindromes
+ * @return void
+ */
 function addFoundPalindromes(string $number, array &$palindromes): void
 {
     $palindromeBase = $number[0];
