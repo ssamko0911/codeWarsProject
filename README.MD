@@ -1,6 +1,8 @@
 # CodeWars project
 ![Practice makes perfect](/public/img/img_1.png "CodeWars")
 
+![Codewars](https://github.r2v.ch/codewars?user=ssamko0911&top_languages=true)
+
 ![Practice makes perfect](/public/img/img.png "LeetCode")
 
 The project is a clear representation of sharpening my coding skills.
