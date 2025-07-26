@@ -12,51 +12,27 @@ function group(array $numbers): array
         return [];
     }
 
-
-    $data = array_count_values($numbers);
-
     $grouped = [];
 
-    foreach ($data as $key => $item) {
-        $grouped[] = array_fill(0, $item, $key);
-    }
+    while (0 !== count($numbers)) {
+        $temp[] = array_shift($numbers);
+        $unset = [];
 
-//    $grouped = [];
-//    $arrayLength = count($numbers);
-//
-//    foreach ($numbers as $key => $number) {
-//        if (!isUnique($grouped, $number)) {
-//            continue;
-//        }
-//
-//        $occurrences[] = $number;
-//
-//        for ($j = $key + 1; $j < $arrayLength; $j++) {
-//            if ($number === $numbers[$j]) {
-//                $occurrences[] = $numbers[$j];
-//            }
-//        }
-//
-//        $grouped[] = $occurrences;
-//        $occurrences = [];
-//    }
+        for ($j = 0; $j < count($numbers); $j++) {
+            if ($temp[0] === $numbers[$j]) {
+                $temp[] = $numbers[$j];
+                $unset[] = $j;
+            }
+        }
+
+        foreach ($unset as $key) {
+            unset($numbers[$key]);
+        }
+
+        $numbers = array_values($numbers);
+        $grouped[] = $temp;
+        $temp = [];
+    }
 
     return $grouped;
 }
-
-function isUnique(array $grouped, int $number): bool
-{
-    foreach ($grouped as $group) {
-        if (in_array($number, $group, true)) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
-
-//print_r(group([3, 2, 6, 2, 1, 3]));
-//print_r(group([3, 2, 6, 2]));
-//print_r(group([10,-10,5,-3,-9,-6,-3,3,5,-7,0,1,10,-9,-6,7,-3,-6,8,3,9,-2,5,-2,-7,4,-10,-10,1,4]));
-print_r(group([20,15,15,17,20,10,19,16,15,14]));

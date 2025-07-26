@@ -37,4 +37,3 @@ function isPalindrome(string $number): bool
 {
     return $number === strrev($number);
 }
-

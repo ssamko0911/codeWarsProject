@@ -4,8 +4,6 @@ services:
             context: .
             dockerfile: Dockerfile
         container_name: php-codewars
-        env_file:
-            - .env
         restart: unless-stopped
         volumes:
             - ./:/srv/app
@@ -20,10 +18,10 @@ services:
             - php
         restart: unless-stopped
         ports:
-            - "8599:80"
+            - "${WEB_PORT}:80"
         volumes:
             - ./caddy:/etc/caddy
-            - ./:/srv/app
+            - ./:/srv/app:ro
         networks:
             - codewars
 
