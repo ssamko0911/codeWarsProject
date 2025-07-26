@@ -7,16 +7,17 @@
 
 The project is a clear representation of sharpening my coding skills.
 
-### Start php and caddy containers:
+### Start PHP and Caddy containers:
 ```bash
 docker compose up -d --build
 ```
 
-### Start postgres container:
+### Start DB (Postgres) container:
 ```bash
 docker compose -f docker-compose.services.yml -p codewars-services up -d
 ```
 
+### Stop and Remove containers:
 ```bash
 docker compose down -v --remove-orphans
 ```
