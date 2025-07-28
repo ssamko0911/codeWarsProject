@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+//https://www.codewars.com/kata/5d2d0d34bceae80027bffddb
+
 const VOWELS = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'];
 
 /**
