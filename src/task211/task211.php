@@ -28,8 +28,3 @@ function remove(string $str): string
 
     return implode(' ', $equalised);
 }
-
-//echo remove("Hi!") . PHP_EOL;
-//echo remove("!Hi! Hi!") . PHP_EOL;
-//echo remove("!!Hi! !Hi!!") . PHP_EOL;
-echo remove("!!!!Hi!! !!!!Hi !Hi!!!") . PHP_EOL;
