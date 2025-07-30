@@ -1,9 +1,11 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 // https://www.codewars.com/kata/58f5c63f1e26ecda7e000029/train/php
 
+/**
+ * @param string $people
+ * @return string[]
+ */
 function wave(string $people): array
 {
     if (empty($people)) {
@@ -12,17 +14,18 @@ function wave(string $people): array
 
     $initialString = $people;
 
-    $result = [];
+    $wave = [];
+    $length = strlen($people);
 
-    for ($i = 0; $i < strlen($people); $i++) {
-        if ($initialString[$i] === ' ') {
+    for ($i = 0; $i < $length; $i++) {
+        if (' ' === $initialString[$i]) {
             continue;
         }
 
         $initialString[$i] = strtoupper($people[$i]);
-        $result[] = $initialString;
+        $wave[] = $initialString;
         $initialString = $people;
     }
 
-    return $result;
+    return $wave;
 }
