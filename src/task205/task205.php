@@ -24,6 +24,3 @@ function tail_swap(array $strings): array {
         $heads[1] . $separator . $tails[0]
     ];
 }
-
-print_r(tail_swap(["abc:123", "cde:456"]));
-print_r(tail_swap(["a:12345", "777:xyz"]));
