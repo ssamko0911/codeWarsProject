@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-// https://www.codewars.com/kata/581e476d5f59408553000a4b/php
+// https://www.codewars.com/kata/581e476d5f59408553000a4b/train/php
 
 require '../../vendor/autoload.php';
 
