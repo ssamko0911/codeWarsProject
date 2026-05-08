@@ -4,7 +4,7 @@
 
 require '../../vendor/autoload.php';
 
-use App\task213\model\Node;
+use App\task213\Model\Node;
 
 $node = new Node(1, new Node(2, new Node(3)));
 echo $node->get_nth($node, 3) . PHP_EOL;
