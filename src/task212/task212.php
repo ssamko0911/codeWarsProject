@@ -4,6 +4,6 @@
 
 require '../../vendor/autoload.php';
 
-use App\task212\model\Node;
+use App\task212\Model\Node;
 
 $node = new Node(1, new Node(2, new Node(3, new Node(4))));

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\task212\model;
+namespace App\task212\Model;
 class Node
 {
     public $data, $next;

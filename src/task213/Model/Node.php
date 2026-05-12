@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\task213\model;
+namespace App\task213\Model;
 
 use InvalidArgumentException;
 
