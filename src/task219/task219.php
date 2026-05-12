@@ -73,9 +73,3 @@ function getFirstMiddleNameChars(string $firstName, string $middleName): string
 
     return '' === $middleName ? $encoded . PADDING_CHAR : $encoded . mb_substr($middleName, 0, 1);
 }
-
-$data = ["Andrew", "Robert", "Lee", "02-September-1981", "M"];
-$data2 = ["Johanna", "", "Gibbs", "13-Dec-1981", "F"];
-
-echo driver($data) . PHP_EOL;
-echo driver($data2) . PHP_EOL;
