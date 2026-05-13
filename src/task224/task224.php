@@ -45,5 +45,3 @@ function getAffixes(string $str, bool $suffix = false): array
 
     return $items;
 }
-
-var_dump(solve('abcdabc'));
