@@ -4,6 +4,7 @@ namespace App\task222\Entity;
 
 final class KeypadMapper
 {
+    /** @var array<int, string|string[]> */
     private array $KEYPAD_MAP = [
         '0' => ' ',
         '1' => '',
