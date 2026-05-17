@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+// https://www.codewars.com/kata/58ac59d21c9e1d7dc5000150/train/php
+
 /**
  * @param int[] $array
  * @return array<int, int[]>
