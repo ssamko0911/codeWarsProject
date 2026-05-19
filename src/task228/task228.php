@@ -33,9 +33,3 @@ function build_one_two_three(): Node
         ),
     );
 }
-
-$chained = null;
-$chained = push($chained, 3);
-$chained = push($chained, 2);
-$chained = push($chained, 1);
-var_dump(push($chained, 8));
