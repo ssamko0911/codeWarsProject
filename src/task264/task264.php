@@ -15,6 +15,3 @@ function geometric_sequence_elements(int $start, int $const, int $sequenceLength
 
     return $sequenceString;
 }
-
-echo geometric_sequence_elements(2, 3, 5).PHP_EOL;
-echo geometric_sequence_elements(1, -2, 10).PHP_EOL;
