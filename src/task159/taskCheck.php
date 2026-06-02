@@ -1,8 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 
-declare(strict_types=1);
-
-require '../../vendor/autoload.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 use App\task159\Entity\Grid;
 use App\task159\Entity\Password;
@@ -17,5 +15,4 @@ $grid = new Grid($array);
 $password = new Password($grid);
 
 $directions = ["downT", "down", "leftT", "rightT", "rightT", "upT"];
-
 $encoded= $password->getPassword($directions);

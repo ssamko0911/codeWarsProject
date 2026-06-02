@@ -1,28 +1,29 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 // https://www.codewars.com/kata/58f5c63f1e26ecda7e000029/train/php
 
+/**
+ * @return string[]
+ */
 function wave(string $people): array
 {
     if (empty($people)) {
         return [];
     }
 
-    $initialString = $people;
+    $peopleCopy = $people;
+    $mexicanWave = [];
+    $length = strlen($people);
 
-    $result = [];
-
-    for ($i = 0; $i < strlen($people); $i++) {
-        if ($initialString[$i] === ' ') {
+    for ($i = 0; $i < $length; $i++) {
+        if (' ' === $peopleCopy[$i]) {
             continue;
         }
 
-        $initialString[$i] = strtoupper($people[$i]);
-        $result[] = $initialString;
-        $initialString = $people;
+        $peopleCopy[$i] = strtoupper($people[$i]);
+        $mexicanWave[] = $peopleCopy;
+        $peopleCopy = $people;
     }
 
-    return $result;
+    return $mexicanWave;
 }
